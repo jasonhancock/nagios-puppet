@@ -29,6 +29,7 @@ THE SOFTWARE.
 PLUGINS:
 -------
 **check_pupdash_nodes:**
+
 This check is designed to be run against a host that is running the puppet
 dashboard application. The plugin grabs the index page of the application
 and parses the results, generating a graph of machines based on their current
@@ -58,10 +59,12 @@ script to accept a username/password. If the dashboard is running on a port othe
 than port 80, adjust the -p parameter in the command.
 
 **check_puppet_comptime:**
+
 This check is designed to be run locally on the puppetmaster via NRPE and returns
 the average catalog compilation time based on the puppetmaster's log.
 
 Example NRPE configuration:
+
 ```
 command[check_puppet_comptime]=/usr/bin/sudo /usr/lib64/nagios/plugins/check_puppet_comptime -w 2 -c 3 -f /var/log/messages
 ```
