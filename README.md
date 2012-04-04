@@ -78,5 +78,6 @@ Cmnd_Alias PUPPET = /usr/lib64/nagios/plugins/check_puppet_comptime *
 nrpe  ALL=(ALL)       NOPASSWD: PUPPET
 ```
 
+You may also need to comment out `Defaults requiretty` in your sudoers file".
 Once you have the NRPE config working, configure the nagios side of things just like you
 would for any other NRPE check.
