@@ -29,7 +29,7 @@ use LWP;
 use Nagios::Plugin;
 
 my $np = Nagios::Plugin->new(
-    usage     => "Usage: %s [-H|--host=<host> ] [ -p|--port=<port> ]",
+    usage     => "Usage: %s [-H|--host=<host> ] [ -p|--port=<port> ] [-s]",
     shortname => 'Dashboard Hosts',
 );
 
@@ -44,6 +44,11 @@ $np->add_arg(
     default => 80,
 );
 
+$np->add_arg(
+    spec    => 'ssl|s',
+    help    => '-s, --ssl   Use SSL (For when puppet dashboard is behind https)',
+);
+
 $np->getopts;
 
 my @interests = (
@@ -55,7 +60,11 @@ my @interests = (
     'unreported'
 );
 
-my $url = sprintf('http://%s:%d/', $np->opts->host, $np->opts->port);
+my $url = sprintf('http%s://%s:%d/', 
+    defined($np->opts->ssl) ? 's' : '',
+    $np->opts->host,
+    $np->opts->port
+);
 
 my $ua = new LWP::UserAgent;
 my $response = $ua->get($url);
