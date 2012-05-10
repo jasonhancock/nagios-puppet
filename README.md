@@ -56,7 +56,8 @@ define service{
 
 If you have authentication in front of the dashboard, you will have to modify the
 script to accept a username/password. If the dashboard is running on a port other
-than port 80, adjust the -p parameter in the command.
+than port 80, adjust the -p parameter in the command. If your dashboard is behind
+ssl, add the -s option.
 
 **check_puppet_comptime:**
 
