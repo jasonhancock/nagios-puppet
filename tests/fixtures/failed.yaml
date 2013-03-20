@@ -1,0 +1,34 @@
+--- 
+  version: 
+    config: 1363800621
+    puppet: "3.1.1"
+  time: 
+    total: 31.1882478132935
+    exec: 2.519148
+    last_run: 1363803993
+    package: 3.071953
+    firewall: 0.00658
+    file: 10.937922
+    config_retrieval: 9.31345081329346
+    yumrepo: 0.013204
+    user: 0.054552
+    service: 5.268216
+    resources: 0.000452
+    filebucket: 0.000692
+    cron: 0.000937
+    group: 0.001141
+  changes: 
+    total: 0
+  resources: 
+    total: 344
+    scheduled: 0
+    restarted: 0
+    failed_to_restart: 0
+    failed: 2
+    skipped: 9
+    out_of_sync: 2
+    changed: 0
+  events: 
+    total: 2
+    failure: 2
+    success: 0

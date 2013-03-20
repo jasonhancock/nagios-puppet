@@ -1,0 +1,34 @@
+--- 
+  time: 
+    total: 16.1705669667053
+    exec: 3.394254
+    yumrepo: 0.01236
+    service: 4.012097
+    package: 0.383651
+    file: 3.712011
+    config_retrieval: 4.63013696670532
+    last_run: 1363815690
+    user: 0.012439
+    sysctl: 0.00177
+    host: 0.00371
+    firewall: 0.004457
+    cron: 0.003164
+    filebucket: 0.000517
+  changes: 
+    total: 0
+  version: 
+    puppet: "3.1.1"
+    config: 1363806362
+  resources: 
+    total: 355
+    out_of_sync: 0
+    failed: 0
+    skipped: 6
+    changed: 0
+    restarted: 0
+    scheduled: 0
+    failed_to_restart: 0
+  events: 
+    total: 0
+    success: 0
+    failure: 0
