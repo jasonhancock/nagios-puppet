@@ -29,13 +29,14 @@ use LWP;
 use Nagios::Plugin;
 
 my $np = Nagios::Plugin->new(
-    usage     => "Usage: %s [-H|--host=<host> ] [ -p|--port=<port> ] [--httpuser=<user>] [--httppass=<pass>]",
+    usage     => "Usage: %s [-H|--host=<host> ] [ -p|--port=<port> ] [-U|--httpuser=<user>] [-P|--httppass=<pass>]",
     shortname => 'Dashboard Hosts',
 );
 
 $np->add_arg(
-    spec => 'host|H=s',
-    help => '-H, --host=Hostname or IP address'
+    spec     => 'host|H=s',
+    help     => '-H, --host=Hostname or IP address',
+    required => 1,
 );
 
 $np->add_arg(
@@ -45,13 +46,19 @@ $np->add_arg(
 );
 
 $np->add_arg(
-    spec    => 'httpuser=s',
+    spec    => 'httpuser|U=s',
     help    => '-U, --user=user',
 );
 
 $np->add_arg(
-    spec    => 'httppass=s',
+    spec    => 'httppass|P=s',
     help    => '-P, --pass=pass',
+);
+
+$np->add_arg(
+    spec    => 'realm|r=s',
+    help    => '-r, --realm=realm',
+    default => 'Puppet Dashboard'
 );
 
 $np->add_arg(
@@ -82,7 +89,12 @@ my $url = sprintf('http%s://%s/',
 
 my $ua = new LWP::UserAgent;
 if (defined($np->opts->httpuser)) {
-  $ua->credentials($domain,'Puppet Dashboard',$np->opts->httpuser,$np->opts->httppass);
+  $ua->credentials(
+    $domain,
+    $np->opts->realm,
+    $np->opts->httpuser,
+    $np->opts->httppass
+  );
 }
 my $response = $ua->get($url);
 
