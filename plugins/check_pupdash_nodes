@@ -29,7 +29,7 @@ use LWP;
 use Nagios::Plugin;
 
 my $np = Nagios::Plugin->new(
-    usage     => "Usage: %s [-H|--host=<host> ] [ -p|--port=<port> ] [-s]",
+    usage     => "Usage: %s [-H|--host=<host> ] [ -p|--port=<port> ] [--httpuser=<user>] [--httppass=<pass>]",
     shortname => 'Dashboard Hosts',
 );
 
@@ -42,6 +42,16 @@ $np->add_arg(
     spec    => 'port|p=s',
     help    => '-p, --port=port',
     default => 80,
+);
+
+$np->add_arg(
+    spec    => 'httpuser=s',
+    help    => '-U, --user=user',
+);
+
+$np->add_arg(
+    spec    => 'httppass=s',
+    help    => '-P, --pass=pass',
 );
 
 $np->add_arg(
@@ -60,13 +70,20 @@ my @interests = (
     'unreported'
 );
 
-my $url = sprintf('http%s://%s:%d/', 
-    defined($np->opts->ssl) ? 's' : '',
+our $domain = sprintf('%s:%d',
     $np->opts->host,
     $np->opts->port
+),
+
+my $url = sprintf('http%s://%s/', 
+    defined($np->opts->ssl) ? 's' : '',
+    $domain,
 );
 
 my $ua = new LWP::UserAgent;
+if (defined($np->opts->httpuser)) {
+  $ua->credentials($domain,'Puppet Dashboard',$np->opts->httpuser,$np->opts->httppass);
+}
 my $response = $ua->get($url);
 
 if (!$response->is_success) {
