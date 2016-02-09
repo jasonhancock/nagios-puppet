@@ -1,24 +1,18 @@
 #!/usr/bin/perl
 
-# Copyright (c) 2013 Jason Hancock <jsnbyh@gmail.com>
+# Copyright 2012-2016 Jason Hancock
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is furnished
-# to do so, subject to the following conditions:
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 # This file is part of the nagios-puppet bundle that can be found
 # at https://github.com/jasonhancock/nagios-puppet
@@ -28,13 +22,13 @@
 
 use strict;
 use warnings;
-use YAML::Syck;
+use YAML qw(LoadFile);
 use Nagios::Plugin;
 use Nagios::Plugin::Threshold;
 
 my $np = Nagios::Plugin->new(
     usage     => "Usage: %s [-c|--critical=<threshold> ] [ -w|--warning=<threshold> ] "
-        . "[-f|--file=<path_to_file> ] [ -n|--numlines=<number_of_lines> ] ",
+        . "[-f|--file=<path_to_file> ] ",
     shortname => 'Puppet Last Run',
 );
 
@@ -50,8 +44,8 @@ $np->add_arg(
 
 $np->add_arg(
     spec    => 'file|f=s',
-    help    => '-f, --file=Path to last_run_summary.yaml. Defaults to /var/lib/puppet/state/last_run_summary.yaml',
-    default => '/var/lib/puppet/state/last_run_summary.yaml'
+    help    => '-f, --file=Path to last_run_summary.yaml. Defaults to /opt/puppetlabs/puppet/cache/state/last_run_summary.yaml',
+    default => '/opt/puppetlabs/puppet/cache/state/last_run_summary.yaml'
 );
 
 $np->getopts;
